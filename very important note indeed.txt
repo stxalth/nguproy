@@ -1,0 +1,16 @@
+to-do list (updated 09 july 2021):
+[-] Make a sign-in page. (done)
+[-] Make a sign-up page. (done)
+
+[-] Make data input page
+[-] Make an edit & delete page
+
+Account:
+-Sign in (either NIDN or email gunadarma and password)
+-onclick dropdown for profile viewer (contains "Change Password" and "Log Out").
+
+converting excel and csv files:
+[-] we can import excel and csv file to database (in our case, mongodb) with node.js using Convert-Excel-to-jason lib for excel files and csvtojson lib for csv files.
+
+your questions (updated 09 July 2021):
+[-] Which of the following should be used for sign in, NIDN or gunadarma email?
