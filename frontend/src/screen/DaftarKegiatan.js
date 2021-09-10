@@ -8,10 +8,14 @@ import {
   deleteKegiatan,
   createKegiatan,
 } from "../Actions/daftarkegiatanActions";
-import { KEGIATAN_CREATE_RESET } from "../constants/daftarkegiatanConstants";
+import {
+  KEGIATAN_CREATE_RESET,
+  KEGIATAN_DELETE_RESET,
+} from "../constants/daftarkegiatanConstants";
 
 export default function DaftarKegiatan(props) {
   const dispatch = useDispatch();
+
   const kegiatanList = useSelector((state) => state.kegiatanList);
   const { loading, error, daftarkegiatan } = kegiatanList;
 
@@ -22,16 +26,29 @@ export default function DaftarKegiatan(props) {
     success: successCreate,
     kegiatan: createdKegiatan,
   } = kegiatanCreate;
+
+  const kegiatanDelete = useSelector((state) => state.kegiatanDelete);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = kegiatanDelete;
+  // const userSignin = useSelector((state) => state.userSignin);
+  // const { userInfo } = userSignin;
+
   useEffect(() => {
     if (successCreate) {
       dispatch({ type: KEGIATAN_CREATE_RESET });
       props.history.push(`/daftarkegiatan/${createdKegiatan._id}/edit`);
     }
+    if (successDelete) {
+      dispatch({ type: KEGIATAN_DELETE_RESET });
+    }
     dispatch(listKegiatan());
-  }, [createdKegiatan, dispatch, props.history, successCreate]);
-  const deleteHandler = (daftarkegiatan) => {
-    if (window.confirm("Are you sure to delete?")) {
-      dispatch(deleteKegiatan(daftarkegiatan._id));
+  }, [createdKegiatan, dispatch, props.history, successCreate, successDelete]);
+  const deleteHandler = (kegiatan) => {
+    if (window.confirm("Yakin ingin menghapus?")) {
+      dispatch(deleteKegiatan(kegiatan._id));
     }
   };
 
@@ -40,6 +57,9 @@ export default function DaftarKegiatan(props) {
   };
   return (
     <div>
+      {loadingDelete && <LoadingBox></LoadingBox>}
+      {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
+
       {loadingCreate && <LoadingBox></LoadingBox>}
       {errorCreate && <MessageBox variant="danger">{errorCreate}</MessageBox>}
       {loading ? (
@@ -57,7 +77,7 @@ export default function DaftarKegiatan(props) {
           <table className="table">
             <thead>
               <tr>
-                <th>No.</th>
+                <th>Aksi</th>
                 <th>Tahun Kegiatan</th>
                 <th>Kategori</th>
                 <th>Kepesertaan</th>
@@ -70,34 +90,20 @@ export default function DaftarKegiatan(props) {
                 <th>URL</th>
                 <th>Foto</th>
                 <th>Surat Tugas</th>
-                <th>Aksi</th>
               </tr>
             </thead>
 
             <tbody>
-              {daftarkegiatan.map((daftarkegiatan) => (
-                <tr key={daftarkegiatan._id}>
-                  <td>{daftarkegiatan.no}</td>
-                  <td>{daftarkegiatan.thnkegiatan}</td>
-                  <td>{daftarkegiatan.kategori}</td>
-                  <td>{daftarkegiatan.kepesertaan}</td>
-                  <td>{daftarkegiatan.namakegiatan}</td>
-                  <td>{daftarkegiatan.jmlpt}</td>
-                  <td>{daftarkegiatan.capaian}</td>
-                  <td>{daftarkegiatan.tglmulai.substring(0, 10)}</td>
-                  <td>{daftarkegiatan.tglakhir.substring(0, 10)}</td>
-                  <td>{daftarkegiatan.sertifpiala}</td>
-                  <td>{daftarkegiatan.url}</td>
-                  <td>{daftarkegiatan.foto}</td>
-                  <td>{daftarkegiatan.surattgs}</td>
+              {daftarkegiatan.map((kegiatan) => (
+                <tr key={kegiatan._id}>
                   <td>
                     <div className="buttonaksi">
                       <button
                         type="button"
                         className="material-icons"
                         onClick={() =>
-                          props.hitory.push(
-                            `/daftarkegiatan/${daftarkegiatan._id}/edit`
+                          props.history.push(
+                            `/daftarkegiatan/${kegiatan._id}/edit`
                           )
                         }
                       >
@@ -106,12 +112,26 @@ export default function DaftarKegiatan(props) {
                       <button
                         type="button"
                         className="material-icons"
-                        onClick={() => deleteHandler(daftarkegiatan)}
+                        onClick={() => deleteHandler(kegiatan)}
                       >
                         delete
                       </button>
                     </div>
                   </td>
+                  <td>{kegiatan.tahunkegiatan}</td>
+                  <td>{kegiatan.kategori}</td>
+                  <td>{kegiatan.kepesertaan}</td>
+                  <td>{kegiatan.namakegiatan}</td>
+                  <td>{kegiatan.jmlpt}</td>
+                  <td>{kegiatan.capaian}</td>
+                  <td>{kegiatan.tglmulai.substr(0, 12)}</td>
+                  <td>{kegiatan.tglakhir.substr(0, 12)}</td>
+                  <td>{kegiatan.sertifpiala}</td>
+                  <td>{kegiatan.url}</td>
+                  <td>
+                    <a href={kegiatan.foto}>{kegiatan.foto}</a>
+                  </td>
+                  <td>{kegiatan.surattgs}</td>
                 </tr>
               ))}
             </tbody>

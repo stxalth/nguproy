@@ -1,16 +1,21 @@
-to-do list (updated 09 july 2021):
-[-] Make a sign-in page. (done)
-[-] Make a sign-up page. (done)
+[10 August 2021]
+[-] Make a register page
+[-] Make a user roles management system for Admin
+[-] Make 2 roles: Admin and User
+-Admin is the one who grant access CRUD to the User
+-User is the one who access the data
+[-] Make a calendar feature for Tanggal Akhir & Tanggal Mulai
+[-] For the style of input data page, Label on the left and Field on the right (done)
+[-] For file type of data, just show the URL on the table. No need to show 
+image for image files.
 
-[-] Make data input page
-[-] Make an edit & delete page
+Ask about the requirements for the register page. Especially for register Admin
 
 Account:
 -Sign in (either NIDN or email gunadarma and password)
 -onclick dropdown for profile viewer (contains "Change Password" and "Log Out").
 
 converting excel and csv files:
-[-] we can import excel and csv file to database (in our case, mongodb) with node.js using Convert-Excel-to-jason lib for excel files and csvtojson lib for csv files.
-
-your questions (updated 09 July 2021):
-[-] Which of the following should be used for sign in, NIDN or gunadarma email?
+[-] we can import excel and csv file to database (in our case, mongodb) 
+with node.js using Convert-Excel-to-jason lib for excel files and 
+csvtojson lib for csv files.

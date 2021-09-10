@@ -38,7 +38,8 @@ body::-webkit-scrollbar-thumb {
   height: 100%;
 }
 .container {
-  width: 90%;
+  padding-left: 60px;
+  width: 95%;
   margin: auto;
   overflow: hidden;
   text-align: center;
@@ -69,9 +70,9 @@ header a {
   padding: 1rem;
   flex-wrap: wrap;
 }
-.profil a {
+/* .profil a {
   float: right;
-}
+} */
 a.brand {
   color: white;
   font-size: 3rem;
@@ -85,9 +86,6 @@ a.brand {
 }
 .row.center {
   justify-content: center;
-}
-.danger {
-  background-color: #a02020;
 }
 /*Card*/
 .card {
@@ -132,40 +130,67 @@ a.brand {
   background-color: gray;
   color: white;
   padding: 0.6rem;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   border: none;
 }
-.dropdown {
+.dropbtn:hover {
+  cursor: pointer;
+}
+/* .dropdown {
   position: sticky;
   display: inline-block;
-}
+} */
 
-.dropdown-content {
+/* .dropdown-content {
   display: none;
+  right: 0;
   position: absolute;
   background-color: #f1f1f1;
   min-width: 100px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
-}
+} */
 
 .dropdown-content a {
-  color: black;
-  padding: 8px 12px;
+  color: white;
+  padding: 12px 12px;
   text-decoration: none;
   display: block;
+  text-align: center;
 }
 
 .dropdown-content a:hover {
   background-color: #ddd;
 }
+/* .dropdown:hover .dropdown-content {
+  display: block;
+} */
+
+/* Dropdown */
+.dropdown {
+  display: inline-block;
+  position: sticky;
+  padding-right: 1rem;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  width: 85px;
+  min-width: 20%;
+  font-size: 1.3rem;
+  padding: 1rem;
+  z-index: 1;
+  margin: 2px;
+  border-radius: 0.5rem;
+  list-style-type: none;
+  color: white;
+  background-color: #293846;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
 .dropdown:hover .dropdown-content {
   display: block;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  text-align: left;
 }
 
 /*Sidebar*/
@@ -215,14 +240,18 @@ code {
 /* Table */
 .judultabel {
   float: left;
-  padding-left: 160px;
+  margin-left: 180px;
 }
 .table {
-  width: 100%;
+  margin-left: 180px;
+  width: 80%;
   height: auto;
   margin-bottom: 20px;
-  justify-content: center;
-  padding-left: 160px;
+  position: static;
+  white-space: nowrap;
+  overflow: auto;
+  overflow-x: auto;
+  display: block;
 }
 
 th {
@@ -257,6 +286,9 @@ tbody {
 .danger {
   color: #a02020;
 }
+.success {
+  color: #20a020;
+}
 .alert {
   text-align: center;
   padding: 1rem;
@@ -276,9 +308,10 @@ tbody {
   text-align: center;
   /* padding-left: 700px; */
 }
+
 /*Form*/
 .form {
-  text-align: center;
+  text-align: left;
   max-width: 60rem;
   margin: 0 auto;
 }
@@ -292,9 +325,45 @@ tbody {
   display: block;
 }
 .form input {
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 16px;
+  padding: 7px 7px;
+  margin-top: 10px;
+}
+.formsignin {
+  text-align: center;
+  max-width: 60rem;
+  margin: 0 auto;
+}
+.formsignin input {
   width: 50%;
   box-sizing: border-box;
   font-size: 16px;
   padding: 7px 7px;
   margin-top: 10px;
+}
+.formsignin label {
+  margin: 1rem 0;
+  display: block;
+}
+.react-datepicker {
+  font-size: 1.5rem !important;
+}
+
+.react-datepicker__current-month {
+  font-size: 1.5rem !important;
+}
+
+.react-datepicker__header {
+  padding-top: 8px !important;
+}
+
+.react-datepicker__navigation {
+  top: 15px !important;
+}
+
+.react-datepicker__day-name,
+.react-datepicker__day {
+  margin: 0.7rem !important;
 }

@@ -10,6 +10,13 @@ import {
   KEGIATAN_LIST_FAIL,
   KEGIATAN_LIST_REQUEST,
   KEGIATAN_LIST_SUCCESS,
+  KEGIATAN_DETAILS_REQUEST,
+  KEGIATAN_DETAILS_SUCCESS,
+  KEGIATAN_DETAILS_FAIL,
+  KEGIATAN_UPDATE_REQUEST,
+  KEGIATAN_UPDATE_SUCCESS,
+  KEGIATAN_UPDATE_FAIL,
+  KEGIATAN_UPDATE_RESET,
 } from "../constants/daftarkegiatanConstants";
 
 export const kegiatanListReducer = (
@@ -28,6 +35,19 @@ export const kegiatanListReducer = (
   }
 };
 
+export const kegiatanDetailsReducer = (state = { loading: true }, action) => {
+  switch (action.type) {
+    case KEGIATAN_DETAILS_REQUEST:
+      return { loading: true };
+    case KEGIATAN_DETAILS_SUCCESS:
+      return { loading: false, kegiatan: action.payload };
+    case KEGIATAN_DETAILS_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
 export const kegiatanCreateReducer = (state = {}, action) => {
   switch (action.type) {
     case KEGIATAN_CREATE_REQUEST:
@@ -37,6 +57,21 @@ export const kegiatanCreateReducer = (state = {}, action) => {
     case KEGIATAN_CREATE_FAIL:
       return { loading: false, error: action.payload };
     case KEGIATAN_CREATE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const kegiatanUpdateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case KEGIATAN_UPDATE_REQUEST:
+      return { loading: true };
+    case KEGIATAN_UPDATE_SUCCESS:
+      return { loading: false, success: true };
+    case KEGIATAN_UPDATE_FAIL:
+      return { loading: false, error: action.payload };
+    case KEGIATAN_UPDATE_RESET:
       return {};
     default:
       return state;

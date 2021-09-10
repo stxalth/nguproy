@@ -1,14 +1,14 @@
 import mongoose from "mongoose";
 
 const kegiatanSchema = new mongoose.Schema({
-  tahunkegiatan: { type: String },
+  tahunkegiatan: { type: Number },
   kategori: { type: String },
   kepesertaan: { type: String },
   namakegiatan: { type: String },
-  jumlahpt: { type: Number },
+  jmlpt: { type: Number },
   capaian: { type: String },
-  tglmulai: { type: Date },
-  tglakhir: { type: Date },
+  tglmulai: { type: String },
+  tglakhir: { type: String },
   sertifpiala: { type: String },
   url: { type: String },
   foto: { type: String },

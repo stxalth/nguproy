@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { signin } from "../Actions/userActions";
 import LoadingBox from "../Components/LoadingBox";
 import MessageBox from "../Components/MessageBox";
+import { Link } from "react-router-dom";
 
 export default function SigninScreen(props) {
   const [email, setEmail] = useState("");
@@ -27,7 +28,7 @@ export default function SigninScreen(props) {
   }, [props.history, redirect, userInfo]);
   return (
     <div>
-      <form className="form" onSubmit={submitHandler}>
+      <form className="formsignin" onSubmit={submitHandler}>
         <div>
           <h1>Sign In</h1>
         </div>
@@ -57,6 +58,10 @@ export default function SigninScreen(props) {
             <button className="login" type="submit">
               Login
             </button>
+            <label />
+            <div>
+              <Link to="/register">Buat Akun</Link>
+            </div>
           </div>
         </div>
       </form>

@@ -13,6 +13,14 @@ kegiatanRouter.get(
     res.send(kegiatan);
   })
 );
+kegiatanRouter.get("/:id", async (req, res) => {
+  const kegiatan = await Kegiatan.findOne({ _id: req.params.id });
+  if (kegiatan) {
+    res.send(kegiatan);
+  } else {
+    res.status(404).send({ message: "Data not found" });
+  }
+});
 
 kegiatanRouter.get(
   "/seed",
@@ -29,18 +37,56 @@ kegiatanRouter.post(
   isAdmin,
   expressAsyncHandler(async (req, res) => {
     const kegiatan = new Kegiatan({
-      tahunkegiatan: "fhaslkfhaukls",
-      kategori: "whdadwal",
+      tahunkegiatan: "",
+      kategori: "",
+      kepesertaan: "",
+      namakegiatan: "",
+      jmlpt: "",
+      capaian: "",
+      tglmulai: "",
+      tglakhir: "",
+      sertifpiala: "",
+      url: "",
+      foto: "",
+      surattgs: "",
     });
     const createdKegiatan = await kegiatan.save();
     res.send({ message: "Data telah dibuat", kegiatan: createdKegiatan });
   })
 );
 
+kegiatanRouter.put(
+  "/:id",
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const kegiatanId = req.params.id;
+    const kegiatan = await Kegiatan.findByIdAndUpdate(kegiatanId);
+    if (kegiatan) {
+      kegiatan.tahunkegiatan = req.body.tahunkegiatan;
+      kegiatan.kategori = req.body.kategori;
+      kegiatan.kepesertaan = req.body.kepesertaan;
+      kegiatan.namakegiatan = req.body.namakegiatan;
+      kegiatan.jmlpt = req.body.jmlpt;
+      kegiatan.capaian = req.body.capaian;
+      kegiatan.tglmulai = req.body.tglmulai;
+      kegiatan.tglakhir = req.body.tglakhir;
+      kegiatan.sertifpiala = req.body.sertifpiala;
+      kegiatan.url = req.body.url;
+      kegiatan.foto = req.body.foto;
+      kegiatan.surattgs = req.body.surattgs;
+      const updatedKegiatan = await kegiatan.save();
+      res.send({ message: "Data Updated", kegiatan: updatedKegiatan });
+    } else {
+      res.status(404).send({ message: "Data Not Found" });
+    }
+  })
+);
+
 kegiatanRouter.delete(
   "/:id",
-  // isAuth,
-  // isAdmin,
+  isAuth,
+  isAdmin,
   expressAsyncHandler(async (req, res) => {
     const kegiatan = await Kegiatan.findById(req.params.id);
     if (kegiatan) {
