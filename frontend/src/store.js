@@ -1,6 +1,12 @@
 import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import thunk from "redux-thunk";
-import { studiListReducer } from "./reducers/programstudiReducers";
+import {
+  studiCreateReducer,
+  studiDeleteReducer,
+  studiDetailsReducer,
+  studiListReducer,
+  studiUpdateReducer,
+} from "./reducers/programstudiReducers";
 import {
   kegiatanCreateReducer,
   kegiatanDeleteReducer,
@@ -14,7 +20,15 @@ import {
   userListReducer,
   userRegisterReducer,
   userSigninReducer,
+  userUpdateReducer,
 } from "./reducers/userReducers";
+import {
+  mahasiswaCreateReducer,
+  mahasiswaDeleteReducer,
+  mahasiswaDetailsReducer,
+  mahasiswaListReducer,
+  mahasiswaUpdateReducer,
+} from "./reducers/mahasiswaReducers";
 
 const initialState = {
   userSignin: {
@@ -31,10 +45,20 @@ const reducer = combineReducers({
   kegiatanCreate: kegiatanCreateReducer,
   kegiatanUpdate: kegiatanUpdateReducer,
   kegiatanDetails: kegiatanDetailsReducer,
+  mahasiswaList: mahasiswaListReducer,
+  mahasiswaCreate: mahasiswaCreateReducer,
+  mahasiswaDetails: mahasiswaDetailsReducer,
+  mahasiswaDelete: mahasiswaDeleteReducer,
+  mahasiswaUpdate: mahasiswaUpdateReducer,
   userList: userListReducer,
   userDelete: userDeleteReducer,
   userDetails: userDetailsReducer,
+  userUpdate: userUpdateReducer,
   studiList: studiListReducer,
+  studiCreate: studiCreateReducer,
+  studiDelete: studiDeleteReducer,
+  studiDetails: studiDetailsReducer,
+  studiUpdate: studiUpdateReducer,
 });
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(

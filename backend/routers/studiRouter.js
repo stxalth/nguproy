@@ -2,7 +2,7 @@ import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import data from "../data.js";
 import Studi from "../models/studiModel.js";
-import { isAdmin, isAuth } from "../utils.js";
+import { isAuth } from "../utils.js";
 
 const studiRouter = express.Router();
 
@@ -13,6 +13,7 @@ studiRouter.get(
     res.send(studi);
   })
 );
+
 studiRouter.get("/:id", async (req, res) => {
   const studi = await Studi.findOne({ _id: req.params.id });
   if (studi) {
@@ -26,7 +27,7 @@ studiRouter.get(
   "/seed",
   expressAsyncHandler(async (req, res) => {
     // await Studi.remove({});
-    const createdStudi = await Studi.insertMany(data.dataprogramstudi);
+    const createdStudi = await Studi.insertMany(data.gunadarma);
     res.send({ createdStudi });
   })
 );
@@ -34,7 +35,6 @@ studiRouter.get(
 studiRouter.post(
   "/",
   isAuth,
-  isAdmin,
   expressAsyncHandler(async (req, res) => {
     const studi = new Studi({
       kode: "",
@@ -48,12 +48,11 @@ studiRouter.post(
 studiRouter.put(
   "/:id",
   isAuth,
-  isAdmin,
   expressAsyncHandler(async (req, res) => {
     const studiId = req.params.id;
     const studi = await Studi.findByIdAndUpdate(studiId);
     if (studi) {
-      studi.kode = req.body.studi;
+      studi.kode = req.body.kode;
       studi.programstudi = req.body.programstudi;
 
       const updatedStudi = await studi.save();
@@ -67,11 +66,10 @@ studiRouter.put(
 studiRouter.delete(
   "/:id",
   isAuth,
-  isAdmin,
   expressAsyncHandler(async (req, res) => {
     const studi = await Studi.findById(req.params.id);
     if (studi) {
-      const deleteStudi = await Studi.remove();
+      const deleteStudi = await studi.remove();
       res.send({ message: "Data Deleted", studi: deleteStudi });
     } else {
       res.status(404).send({ message: "Data Not Found" });

@@ -20,14 +20,14 @@ import {
 } from "../constants/dataprogramstudiConstants";
 
 export const studiListReducer = (
-  state = { loading: true, dataprogramstudi: [] },
+  state = { loading: true, gunadarma: [] },
   action
 ) => {
   switch (action.type) {
     case STUDI_LIST_REQUEST:
       return { loading: true };
     case STUDI_LIST_SUCCESS:
-      return { loading: false, dataprogramstudi: action.payload };
+      return { loading: false, gunadarma: action.payload };
     case STUDI_LIST_FAIL:
       return { loading: false, error: action.payload };
     default:

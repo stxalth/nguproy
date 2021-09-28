@@ -7,6 +7,7 @@ import {
 } from "../Actions/daftarkegiatanActions";
 import LoadingBox from "../Components/LoadingBox";
 import MessageBox from "../Components/MessageBox";
+import Sidebar from "../Components/Sidebar";
 import { KEGIATAN_UPDATE_RESET } from "../constants/daftarkegiatanConstants";
 
 export default function KegiatanEditScreen(props) {
@@ -103,6 +104,7 @@ export default function KegiatanEditScreen(props) {
   };
   return (
     <div>
+      <Sidebar />
       <form className="form" onSubmit={submitHandler}>
         <div>
           <h1>Edit Data {kegiatanId}</h1>

@@ -2,7 +2,7 @@ import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import data from "../data.js";
 import Kegiatan from "../models/kegiatanModel.js";
-import { isAdmin, isAuth } from "../utils.js";
+import { isAuth } from "../utils.js";
 
 const kegiatanRouter = express.Router();
 
@@ -26,7 +26,7 @@ kegiatanRouter.get(
   "/seed",
   expressAsyncHandler(async (req, res) => {
     // await Kegiatan.remove({});
-    const createdKegiatan = await Kegiatan.insertMany(data.daftarkegiatan);
+    const createdKegiatan = await Kegiatan.insertMany(data.gunadarma);
     res.send({ createdKegiatan });
   })
 );
@@ -34,7 +34,6 @@ kegiatanRouter.get(
 kegiatanRouter.post(
   "/",
   isAuth,
-  isAdmin,
   expressAsyncHandler(async (req, res) => {
     const kegiatan = new Kegiatan({
       tahunkegiatan: "",
@@ -49,6 +48,10 @@ kegiatanRouter.post(
       url: "",
       foto: "",
       surattgs: "",
+      npm: "",
+      nama: "",
+      programstudi: "",
+      angkatan: "",
     });
     const createdKegiatan = await kegiatan.save();
     res.send({ message: "Data telah dibuat", kegiatan: createdKegiatan });
@@ -58,7 +61,6 @@ kegiatanRouter.post(
 kegiatanRouter.put(
   "/:id",
   isAuth,
-  isAdmin,
   expressAsyncHandler(async (req, res) => {
     const kegiatanId = req.params.id;
     const kegiatan = await Kegiatan.findByIdAndUpdate(kegiatanId);
@@ -74,7 +76,10 @@ kegiatanRouter.put(
       kegiatan.sertifpiala = req.body.sertifpiala;
       kegiatan.url = req.body.url;
       kegiatan.foto = req.body.foto;
-      kegiatan.surattgs = req.body.surattgs;
+      kegiatan.npm = req.body.npm;
+      kegiatan.nama = req.body.nama;
+      kegiatan.programstudi = req.body.programstudi;
+      kegiatan.angkatan = req.body.angkatan;
       const updatedKegiatan = await kegiatan.save();
       res.send({ message: "Data Updated", kegiatan: updatedKegiatan });
     } else {
@@ -86,7 +91,6 @@ kegiatanRouter.put(
 kegiatanRouter.delete(
   "/:id",
   isAuth,
-  isAdmin,
   expressAsyncHandler(async (req, res) => {
     const kegiatan = await Kegiatan.findById(req.params.id);
     if (kegiatan) {

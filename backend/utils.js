@@ -43,3 +43,11 @@ export const isAdmin = (req, res, next) => {
     res.status(401).send({ message: "Invalid Admin Token" });
   }
 };
+
+export const isEditor = (req, res, next) => {
+  if (req.user && req.user.isEditor) {
+    next();
+  } else {
+    res.status(401).send({ message: "Invalid Editor Token" });
+  }
+};

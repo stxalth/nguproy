@@ -1,5 +1,10 @@
 import Axios from "axios";
 import {
+  MAHASISWA_UPDATE_FAIL,
+  MAHASISWA_UPDATE_REQUEST,
+  MAHASISWA_UPDATE_SUCCESS,
+} from "../constants/mahasiswaConstants";
+import {
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
@@ -18,6 +23,27 @@ import {
   USER_DETAILS_FAIL,
 } from "../constants/userConstants";
 
+// export const register = (name, email, password) => async (dispatch) => {
+//   dispatch({ type: USER_REGISTER_REQUEST, payload: { email, password } });
+//   try {
+//     const { data } = await Axios.post("/api/users/register", {
+//       name,
+//       email,
+//       password,
+//     });
+//     dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
+//     localStorage.setItem("userInfo", JSON.stringify(data));
+//   } catch (error) {
+//     dispatch({
+//       type: USER_REGISTER_FAIL,
+//       payload:
+//         error.response && error.response.data.message
+//           ? error.response.data.message
+//           : error.message,
+//     });
+//   }
+// };
+
 export const register = (name, email, password) => async (dispatch) => {
   dispatch({ type: USER_REGISTER_REQUEST, payload: { email, password } });
   try {
@@ -26,17 +52,16 @@ export const register = (name, email, password) => async (dispatch) => {
       email,
       password,
     });
-    dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
-    dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
-    localStorage.setItem("userInfo", JSON.stringify(data));
-  } catch (error) {
     dispatch({
-      type: USER_REGISTER_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      type: USER_REGISTER_SUCCESS,
+      payload: data.user,
     });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: USER_REGISTER_FAIL, payload: message });
   }
 };
 
@@ -101,6 +126,25 @@ export const deleteUser = (userId) => async (dispatch, getState) => {
           ? error.response.data.message
           : error.message,
     });
+  }
+};
+
+export const updateUser = (user) => async (dispatch, getState) => {
+  dispatch({ type: MAHASISWA_UPDATE_REQUEST, payload: user });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = await Axios.put(`/api/users/${user._id}`, user, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    dispatch({ type: MAHASISWA_UPDATE_SUCCESS, payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: MAHASISWA_UPDATE_FAIL, error: message });
   }
 };
 

@@ -59,9 +59,6 @@ export default function SigninScreen(props) {
               Login
             </button>
             <label />
-            <div>
-              <Link to="/register">Buat Akun</Link>
-            </div>
           </div>
         </div>
       </form>

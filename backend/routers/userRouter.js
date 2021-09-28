@@ -27,6 +27,7 @@ userRouter.post(
           name: user.name,
           email: user.email,
           isAdmin: user.isAdmin,
+          isEditor: user.isEditor,
           token: generateToken(user),
         });
         return;
@@ -50,6 +51,7 @@ userRouter.post(
       name: createdUser.name,
       email: createdUser.email,
       isAdmin: createdUser.isAdmin,
+      isEditor: createdUser.isEditor,
       token: generateToken(createdUser),
     });
   })
@@ -86,17 +88,26 @@ userRouter.delete(
   })
 );
 
+userRouter.get("/:id", async (req, res) => {
+  const user = await User.findOne({ _id: req.params.id });
+  if (user) {
+    res.send(user);
+  } else {
+    res.status(404).send({ message: "Data not found" });
+  }
+});
+
 userRouter.put(
   "/:id",
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
-    const user = await User.findById(req.params.id);
+    const userId = req.params.id;
+    const user = await User.findById(userId);
     if (user) {
       user.name = req.body.name || user.name;
       user.email = req.body.email || user.email;
-      user.isAdmin = Boolean(req.body.isAdmin);
-      // user.isAdmin = req.body.isAdmin || user.isAdmin;
+      user.isEditor = req.body.isEditor;
       const updatedUser = await user.save();
       res.send({ message: "User Updated", user: updatedUser });
     } else {

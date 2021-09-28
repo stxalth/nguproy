@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { register } from "../Actions/userActions";
 import LoadingBox from "../Components/LoadingBox";
 import MessageBox from "../Components/MessageBox";
+import Sidebar from "../Components/Sidebar";
 
 export default function RegisterScreen(props) {
   const [name, setName] = useState("");
@@ -11,12 +12,8 @@ export default function RegisterScreen(props) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const redirect = props.location.search
-    ? props.location.search.split("=")[1]
-    : "/";
-
   const userRegister = useSelector((state) => state.userRegister);
-  const { userInfo, loading, error } = userRegister;
+  const { loading, error } = userRegister;
 
   const dispatch = useDispatch();
   const submitHandler = (e) => {
@@ -25,37 +22,39 @@ export default function RegisterScreen(props) {
       alert("Password and confirm password are not match");
     } else {
       dispatch(register(name, email, password));
+      props.history.push("/userlist");
     }
   };
-  useEffect(() => {
-    if (userInfo) {
-      props.history.push(redirect);
-    }
-  }, [props.history, redirect, userInfo]);
+  // useEffect(() => {
+  //   if (userInfo) {
+  //     props.history.push("/userlist");
+  //   }
+  // }, [props.history, userInfo]);
   return (
     <div>
+      <Sidebar />
       <form className="form" onSubmit={submitHandler}>
         <div>
-          <h1>Create Account</h1>
+          <h1>Buat Akun</h1>
         </div>
         {loading && <LoadingBox></LoadingBox>}
         {error && <MessageBox variant="danger">{error}</MessageBox>}
         <div>
-          <label htmlFor="name">Name</label>
+          <label htmlFor="name">Nama</label>
           <input
             type="text"
             id="name"
-            placeholder="Enter name"
+            placeholder="Masukkan Nama"
             required
             onChange={(e) => setName(e.target.value)}
           ></input>
         </div>
         <div>
-          <label htmlFor="email">Email address</label>
+          <label htmlFor="email">Alamat Email</label>
           <input
             type="email"
             id="email"
-            placeholder="Enter email"
+            placeholder="Masukkan Email"
             required
             onChange={(e) => setEmail(e.target.value)}
           ></input>
@@ -65,17 +64,17 @@ export default function RegisterScreen(props) {
           <input
             type="password"
             id="password"
-            placeholder="Enter password"
+            placeholder="Masukkan Password"
             required
             onChange={(e) => setPassword(e.target.value)}
           ></input>
         </div>
         <div>
-          <label htmlFor="confirmPassword">Confirm Password</label>
+          <label htmlFor="confirmPassword">Konfirmasi Password</label>
           <input
             type="password"
             id="confirmPassword"
-            placeholder="Enter confirm password"
+            placeholder="Konfirmasi password"
             required
             onChange={(e) => setConfirmPassword(e.target.value)}
           ></input>
@@ -88,10 +87,6 @@ export default function RegisterScreen(props) {
         </div>
         <div>
           <label />
-          <div>
-            Already have an account?{" "}
-            <Link to={`/signin?redirect=${redirect}`}>Sign-In</Link>
-          </div>
         </div>
       </form>
     </div>

@@ -1,5 +1,4 @@
 import React from "react";
-import Sidebar from "./Components/Sidebar";
 import dashboard from "./screen/dashboard";
 import DaftarProgramstudi from "./screen/DaftarProgramstudi";
 import DaftarKegiatan from "./screen/DaftarKegiatan";
@@ -12,6 +11,11 @@ import RegisterScreen from "./screen/RegisterScreen";
 import UserListScreen from "./screen/UserListScreen";
 import AdminRoute from "./Components/AdminRoute";
 import UserEditScreen from "./screen/UserEditScreen";
+import DataMahasiswa from "./screen/DataMahasiswa";
+import StudiEditScreen from "./screen/StudiEditScreen";
+import MahasiswaEditScreen from "./screen/MahasiswaEditScreen";
+import EditorRoute from "./Components/EditorRoute";
+import unauthorized from "./Components/unauthorized";
 
 function App() {
   const userSignin = useSelector((state) => state.userSignin);
@@ -34,7 +38,6 @@ function App() {
               <div className="dropdown">
                 <Link to="#">
                   {userInfo.name} <i className="fa fa-angle-down"></i>
-                  {""}
                 </Link>
                 <ul className="dropdown-content">
                   <li>
@@ -70,7 +73,6 @@ function App() {
         </header>
 
         <main>
-          <Sidebar />
           <Route path="/" exact={true} component={SigninScreen} />
           <Route path="/register" component={RegisterScreen}></Route>
           <Route path="/dashboard" component={dashboard} />
@@ -79,17 +81,33 @@ function App() {
             exact={true}
             component={DaftarProgramstudi}
           />
+          <Route path="/unathorized" component={unauthorized} />
           <Route
             path="/DaftarKegiatan"
             exact={true}
             component={DaftarKegiatan}
           />
-          <AdminRoute
+          <Route path="/datamahasiswa" exact={true} component={DataMahasiswa} />
+          <EditorRoute
+            path="/daftarprogramstudi/:id/edit"
+            exact
+            component={StudiEditScreen}
+          />
+          <EditorRoute
+            path="/datamahasiswa/:id/edit"
+            exact
+            component={MahasiswaEditScreen}
+          />
+          <EditorRoute
             path="/daftarkegiatan/:id/edit"
             component={KegiatanEditScreen}
             exact
           />
-          <AdminRoute path="/userlist" component={UserListScreen}></AdminRoute>
+          <AdminRoute
+            path="/userlist"
+            exact={true}
+            component={UserListScreen}
+          ></AdminRoute>
           <AdminRoute
             path="/users/:id/edit"
             component={UserEditScreen}

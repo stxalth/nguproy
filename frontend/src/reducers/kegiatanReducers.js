@@ -27,7 +27,7 @@ export const kegiatanListReducer = (
     case KEGIATAN_LIST_REQUEST:
       return { loading: true };
     case KEGIATAN_LIST_SUCCESS:
-      return { loading: false, daftarkegiatan: action.payload };
+      return { loading: false, gunadarma: action.payload };
     case KEGIATAN_LIST_FAIL:
       return { loading: false, error: action.payload };
     default:

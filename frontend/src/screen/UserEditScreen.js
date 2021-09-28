@@ -1,41 +1,65 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { detailsUser } from "../Actions/userActions";
+import { detailsUser, updateUser } from "../Actions/userActions";
 import LoadingBox from "../Components/LoadingBox";
 import MessageBox from "../Components/MessageBox";
+import Sidebar from "../Components/Sidebar";
+import { USER_UPDATE_RESET } from "../constants/userConstants";
 
 export default function UserEditScreen(props) {
   const userId = props.match.params.id;
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [isAdmin, setIsAdmin] = useState("");
+  const [isEditor, setIsEditor] = useState("");
 
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
 
+  const userUpdate = useSelector((state) => state.userUpdate);
+  const {
+    loading: loadingUpdate,
+    error: errorUpdate,
+    success: successUpdate,
+  } = userUpdate;
+
   const dispatch = useDispatch();
   useEffect(() => {
-    if (!user) {
+    if (successUpdate) {
+      props.history.push("/userlist");
+    }
+    if (!user || user._id !== userId || successUpdate) {
+      dispatch({ type: USER_UPDATE_RESET });
       dispatch(detailsUser(userId));
     } else {
       setName(user.name);
       setEmail(user.email);
-      setIsAdmin(user.isAdmin);
+      setIsEditor(user.isEditor);
     }
-  }, [dispatch, user, userId]);
+  }, [dispatch, user, userId, successUpdate, props.history]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    //dispatch update user
+    //dispatch update
+    dispatch(
+      updateUser({
+        _id: userId,
+        name,
+        email,
+        isEditor,
+      })
+    );
   };
   return (
     <div>
+      <Sidebar />
       <form className="form" onSubmit={submitHandler}>
         <div>
           <h1>Edit User {name}</h1>
         </div>
+        {loadingUpdate && <LoadingBox></LoadingBox>}
+        {errorUpdate && <MessageBox variant="danger">{error}</MessageBox>}
         {loading ? (
-          <LoadingBox />
+          <LoadingBox></LoadingBox>
         ) : error ? (
           <MessageBox variant="danger">{error}</MessageBox>
         ) : (
@@ -65,13 +89,14 @@ export default function UserEditScreen(props) {
               ></input>
             </div>
             <div>
-              <label htmlFor="isAdmin">Name</label>
+              <label htmlFor="isEditor">Editor</label>
               <input
-                id="isAdmin"
+                className="checkbox"
+                id="isEditor"
                 type="checkbox"
-                checked={isAdmin}
+                checked={isEditor}
                 onChange={(e) => {
-                  setIsAdmin(e.target.checked);
+                  setIsEditor(e.target.checked);
                 }}
               ></input>
             </div>

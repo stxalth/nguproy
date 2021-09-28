@@ -2,7 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import path from "path";
-import data from "./data.js";
+import mahasiswaRouter from "./routers/mahasiswaRouter.js";
 import userRouter from "./routers/userRouter.js";
 import kegiatanRouter from "./routers/kegiatanRouter.js";
 import uploadRouter from "./routers/uploadRouter.js";
@@ -22,9 +22,7 @@ mongoose.connect(process.env.MONGODB_URL || "mongodb://localhost/nguproy", {
 
 //if you've made the data Router, you don't need the static data below.
 //then you can also get rid the import data from data.js when you're done.
-app.get("/api/datamahasiswa", (req, res) => {
-  res.send(data.datamahasiswa);
-});
+app.use("/api/datamahasiswa", mahasiswaRouter);
 app.use("/api/daftarprogramstudi", studiRouter);
 app.use("/api/uploads", uploadRouter);
 app.use("/api/users", userRouter);

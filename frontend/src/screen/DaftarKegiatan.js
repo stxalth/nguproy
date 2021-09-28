@@ -12,12 +12,13 @@ import {
   KEGIATAN_CREATE_RESET,
   KEGIATAN_DELETE_RESET,
 } from "../constants/daftarkegiatanConstants";
+import Sidebar from "../Components/Sidebar";
 
 export default function DaftarKegiatan(props) {
   const dispatch = useDispatch();
 
   const kegiatanList = useSelector((state) => state.kegiatanList);
-  const { loading, error, daftarkegiatan } = kegiatanList;
+  const { loading, error, gunadarma } = kegiatanList;
 
   const kegiatanCreate = useSelector((state) => state.kegiatanCreate);
   const {
@@ -57,6 +58,7 @@ export default function DaftarKegiatan(props) {
   };
   return (
     <div>
+      <Sidebar />
       {loadingDelete && <LoadingBox></LoadingBox>}
       {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
 
@@ -90,11 +92,15 @@ export default function DaftarKegiatan(props) {
                 <th>URL</th>
                 <th>Foto</th>
                 <th>Surat Tugas</th>
+                <th>NPM</th>
+                <th>Nama</th>
+                <th>Program Studi</th>
+                <th>Angkatan</th>
               </tr>
             </thead>
 
             <tbody>
-              {daftarkegiatan.map((kegiatan) => (
+              {gunadarma.map((kegiatan) => (
                 <tr key={kegiatan._id}>
                   <td>
                     <div className="buttonaksi">
@@ -132,6 +138,10 @@ export default function DaftarKegiatan(props) {
                     <a href={kegiatan.foto}>{kegiatan.foto}</a>
                   </td>
                   <td>{kegiatan.surattgs}</td>
+                  <td>{kegiatan.npm}</td>
+                  <td>{kegiatan.nama}</td>
+                  <td>{kegiatan.programstudi}</td>
+                  <td>{kegiatan.angkatan}</td>
                 </tr>
               ))}
             </tbody>

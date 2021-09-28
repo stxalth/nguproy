@@ -7,6 +7,7 @@ const data = {
       email: "pindo@gmail.com",
       password: bcrypt.hashSync("1234", 8),
       isAdmin: true,
+      isEditor: true,
     },
     {
       name: "Sabianto",
@@ -15,33 +16,7 @@ const data = {
       isAdmin: true,
     },
   ],
-  dataprogramstudi: [
-    {
-      kode: "62401",
-      programstudi: "D3 Akuntansi",
-    },
-    {
-      kode: "15401",
-      programstudi: "D3 Kebidanan",
-    },
-    {
-      kode: "57401",
-      programstudi: "D3 Manajemen Informatika",
-    },
-    {
-      kode: "61406",
-      programstudi: "D3 Manajemen Keuangan",
-    },
-    {
-      kode: "61404",
-      programstudi: "D3 Manajemen Pemasaran",
-    },
-    {
-      kode: "56401",
-      programstudi: "D3 Teknik Komputer",
-    },
-  ],
-  daftarkegiatan: [
+  gunadarma: [
     {
       tahunkegiatan: "sadfsd",
       kategori: "asdfsa",
@@ -55,15 +30,11 @@ const data = {
       url: "anything",
       foto: "asdfds",
       surattgs: "fdsfsda",
-    },
-  ],
-  datamahasiswa: [
-    {
-      no: "",
-      npm: "",
-      nama: "",
+      kode: "",
       programstudi: "",
-      thn_angkatan: "",
+      nama: "",
+      npm: "",
+      angkatan: "",
     },
   ],
 };
