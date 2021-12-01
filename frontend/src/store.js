@@ -4,6 +4,7 @@ import {
   studiCreateReducer,
   studiDeleteReducer,
   studiDetailsReducer,
+  studiListDropwdownReducer,
   studiListReducer,
   studiUpdateReducer,
 } from "./reducers/programstudiReducers";
@@ -55,6 +56,7 @@ const reducer = combineReducers({
   userDetails: userDetailsReducer,
   userUpdate: userUpdateReducer,
   studiList: studiListReducer,
+  studiListDropdown: studiListDropwdownReducer,
   studiCreate: studiCreateReducer,
   studiDelete: studiDeleteReducer,
   studiDetails: studiDetailsReducer,

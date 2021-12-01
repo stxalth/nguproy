@@ -20,14 +20,14 @@ import {
 } from "../constants/mahasiswaConstants";
 
 export const mahasiswaListReducer = (
-  state = { loading: true, gunadarma: [] },
+  state = { loading: true, datamahasiswa: [] },
   action
 ) => {
   switch (action.type) {
     case MAHASISWA_LIST_REQUEST:
       return { loading: true };
     case MAHASISWA_LIST_SUCCESS:
-      return { loading: false, gunadarma: action.payload };
+      return { loading: false, datamahasiswa: action.payload };
     case MAHASISWA_LIST_FAIL:
       return { loading: false, error: action.payload };
     default:

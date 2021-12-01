@@ -17,18 +17,37 @@ import {
   STUDI_UPDATE_REQUEST,
   STUDI_UPDATE_RESET,
   STUDI_UPDATE_SUCCESS,
+  STUDI_LISTDROPDOWN_REQUEST,
+  STUDI_LISTDROPDOWN_SUCCESS,
+  STUDI_LISTDROPDOWN_FAIL,
 } from "../constants/dataprogramstudiConstants";
 
 export const studiListReducer = (
-  state = { loading: true, gunadarma: [] },
+  state = { loading: true, daftarprogramstudi: [] },
   action
 ) => {
   switch (action.type) {
     case STUDI_LIST_REQUEST:
       return { loading: true };
     case STUDI_LIST_SUCCESS:
-      return { loading: false, gunadarma: action.payload };
+      return { loading: false, daftarprogramstudi: action.payload };
     case STUDI_LIST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const studiListDropwdownReducer = (
+  state = { loading: true, daftarprogramstudi: [] },
+  action
+) => {
+  switch (action.type) {
+    case STUDI_LISTDROPDOWN_REQUEST:
+      return { loading: true };
+    case STUDI_LISTDROPDOWN_SUCCESS:
+      return { loading: false, daftarprogramstudi: action.payload };
+    case STUDI_LISTDROPDOWN_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

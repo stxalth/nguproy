@@ -16,7 +16,13 @@ const data = {
       isAdmin: true,
     },
   ],
-  gunadarma: [
+  daftarprogramstudi: [
+    {
+      kode: "",
+      programstudi: "",
+    },
+  ],
+  daftarkegiatan: [
     {
       tahunkegiatan: "sadfsd",
       kategori: "asdfsa",
@@ -30,10 +36,13 @@ const data = {
       url: "anything",
       foto: "asdfds",
       surattgs: "fdsfsda",
-      kode: "",
-      programstudi: "",
+    },
+  ],
+  datamahasiswa: [
+    {
       nama: "",
       npm: "",
+      programstudi: "",
       angkatan: "",
     },
   ],

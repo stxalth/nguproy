@@ -27,7 +27,7 @@ studiRouter.get(
   "/seed",
   expressAsyncHandler(async (req, res) => {
     // await Studi.remove({});
-    const createdStudi = await Studi.insertMany(data.gunadarma);
+    const createdStudi = await Studi.insertMany(data.daftarprogramstudi);
     res.send({ createdStudi });
   })
 );
@@ -38,7 +38,7 @@ studiRouter.post(
   expressAsyncHandler(async (req, res) => {
     const studi = new Studi({
       kode: "",
-      programstudi: "",
+      program: "",
     });
     const createdStudi = await studi.save();
     res.send({ message: "Data telah dibuat", studi: createdStudi });
@@ -53,7 +53,7 @@ studiRouter.put(
     const studi = await Studi.findByIdAndUpdate(studiId);
     if (studi) {
       studi.kode = req.body.kode;
-      studi.programstudi = req.body.programstudi;
+      studi.program = req.body.program;
 
       const updatedStudi = await studi.save();
       res.send({ message: "Data Updated", studi: updatedStudi });

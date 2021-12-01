@@ -26,7 +26,7 @@ mahasiswaRouter.get(
   "/seed",
   expressAsyncHandler(async (req, res) => {
     // await Mahasiswa.remove({});
-    const createdMahasiswa = await Mahasiswa.insertMany(data.gunadarma);
+    const createdMahasiswa = await Mahasiswa.insertMany(data.datamahasiswa);
     res.send({ createdMahasiswa });
   })
 );

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createMahasiswa,
@@ -15,8 +15,9 @@ import {
 
 export default function DataMahasiswa(props) {
   const dispatch = useDispatch();
+  const [searchTerm, setSearchTerm] = useState("");
   const mahasiswaList = useSelector((state) => state.mahasiswaList);
-  const { loading, error, gunadarma } = mahasiswaList;
+  const { loading, error, datamahasiswa } = mahasiswaList;
 
   const mahasiswaCreate = useSelector((state) => state.mahasiswaCreate);
   const {
@@ -71,6 +72,13 @@ export default function DataMahasiswa(props) {
           <button className="tombolinput" onClick={createHandler}>
             Input Data
           </button>
+          <input
+            type="text"
+            placeholder="Cari.."
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+            }}
+          />
           <table className="table">
             <thead>
               <tr>
@@ -83,36 +91,49 @@ export default function DataMahasiswa(props) {
             </thead>
 
             <tbody>
-              {gunadarma.map((mahasiswa) => (
-                <tr key={mahasiswa.npm}>
-                  <td>{mahasiswa.npm}</td>
-                  <td>{mahasiswa.nama}</td>
-                  <td>{mahasiswa.programstudi}</td>
-                  <td>{mahasiswa.angkatan}</td>
-                  <td>
-                    <div className="buttonaksi">
-                      <button
-                        type="button"
-                        className="material-icons"
-                        onClick={() =>
-                          props.history.push(
-                            `/datamahasiswa/${mahasiswa._id}/edit`
-                          )
-                        }
-                      >
-                        edit
-                      </button>
-                      <button
-                        type="button"
-                        className="material-icons"
-                        onClick={() => deleteHandler(mahasiswa)}
-                      >
-                        delete
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
+              {datamahasiswa
+                .filter((val) => {
+                  if (searchTerm == "") {
+                    return val;
+                  } else if (
+                    val.npm.toString().includes(searchTerm) ||
+                    val.nama.toLowerCase().includes(searchTerm) ||
+                    val.programstudi.toLowerCase().includes(searchTerm) ||
+                    val.angkatan.toLowerCase().includes(searchTerm)
+                  ) {
+                    return val;
+                  }
+                })
+                .map((mahasiswa) => (
+                  <tr key={mahasiswa.npm}>
+                    <td>{mahasiswa.npm}</td>
+                    <td>{mahasiswa.nama}</td>
+                    <td>{mahasiswa.programstudi}</td>
+                    <td>{mahasiswa.angkatan}</td>
+                    <td>
+                      <div className="buttonaksi">
+                        <button
+                          type="button"
+                          className="material-icons"
+                          onClick={() =>
+                            props.history.push(
+                              `/datamahasiswa/${mahasiswa._id}/edit`
+                            )
+                          }
+                        >
+                          edit
+                        </button>
+                        <button
+                          type="button"
+                          className="material-icons"
+                          onClick={() => deleteHandler(mahasiswa)}
+                        >
+                          delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>

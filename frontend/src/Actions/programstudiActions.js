@@ -15,6 +15,9 @@ import {
   STUDI_UPDATE_FAIL,
   STUDI_UPDATE_REQUEST,
   STUDI_UPDATE_SUCCESS,
+  STUDI_LISTDROPDOWN_REQUEST,
+  STUDI_LISTDROPDOWN_SUCCESS,
+  STUDI_LISTDROPDOWN_FAIL,
 } from "../constants/dataprogramstudiConstants";
 
 export const listStudi = () => async (dispatch) => {
@@ -26,6 +29,18 @@ export const listStudi = () => async (dispatch) => {
     dispatch({ type: STUDI_LIST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: STUDI_LIST_FAIL, payload: error.message });
+  }
+};
+
+export const dropdownStudi = () => async (dispatch) => {
+  dispatch({
+    type: STUDI_LISTDROPDOWN_REQUEST,
+  });
+  try {
+    const { data } = await Axios.get("/api/daftarprogramstudi");
+    dispatch({ type: STUDI_LISTDROPDOWN_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: STUDI_LISTDROPDOWN_FAIL, payload: error.message });
   }
 };
 

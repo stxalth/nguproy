@@ -18,7 +18,7 @@ export default function DaftarKegiatan(props) {
   const dispatch = useDispatch();
 
   const kegiatanList = useSelector((state) => state.kegiatanList);
-  const { loading, error, gunadarma } = kegiatanList;
+  const { loading, error, daftarkegiatan } = kegiatanList;
 
   const kegiatanCreate = useSelector((state) => state.kegiatanCreate);
   const {
@@ -100,7 +100,7 @@ export default function DaftarKegiatan(props) {
             </thead>
 
             <tbody>
-              {gunadarma.map((kegiatan) => (
+              {daftarkegiatan.map((kegiatan) => (
                 <tr key={kegiatan._id}>
                   <td>
                     <div className="buttonaksi">

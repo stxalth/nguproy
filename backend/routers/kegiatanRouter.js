@@ -26,7 +26,7 @@ kegiatanRouter.get(
   "/seed",
   expressAsyncHandler(async (req, res) => {
     // await Kegiatan.remove({});
-    const createdKegiatan = await Kegiatan.insertMany(data.gunadarma);
+    const createdKegiatan = await Kegiatan.insertMany(data.daftarkegiatan);
     res.send({ createdKegiatan });
   })
 );

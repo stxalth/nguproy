@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { detailsMahasiswa, updateMahasiswa } from "../Actions/mahasiswaActions";
+import { dropdownStudi } from "../Actions/programstudiActions";
 import LoadingBox from "../Components/LoadingBox";
 import MessageBox from "../Components/MessageBox";
 import Sidebar from "../Components/Sidebar";
+
 import { MAHASISWA_UPDATE_RESET } from "../constants/mahasiswaConstants";
 
 export default function MahasiswaEditScreen(props) {
@@ -12,6 +14,9 @@ export default function MahasiswaEditScreen(props) {
   const [nama, setNama] = useState("");
   const [programstudi, setProgramstudi] = useState("");
   const [angkatan, setAngkatan] = useState("");
+
+  const studiListDropdown = useSelector((state) => state.studiListDropdown);
+  const { daftarprogramstudi } = studiListDropdown;
 
   const mahasiswaDetails = useSelector((state) => state.mahasiswaDetails);
   const { loading, error, mahasiswa } = mahasiswaDetails;
@@ -24,6 +29,13 @@ export default function MahasiswaEditScreen(props) {
   } = mahasiswaUpdate;
 
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(dropdownStudi());
+    return () => {
+      //
+    };
+  }, [dispatch]);
+
   useEffect(() => {
     if (successUpdate) {
       props.history.push("/datamahasiswa");
@@ -94,7 +106,24 @@ export default function MahasiswaEditScreen(props) {
 
             <div>
               <label htmlFor="programstudi">Program Studi</label>
-              <input
+              <select>
+                <option selected disabled="true">
+                  Pilih Program Studi
+                </option>
+
+                {daftarprogramstudi.map((studi) => (
+                  <option
+                    value={studi._id}
+                    onChange={(e) => {
+                      setProgramstudi(e.target.value);
+                    }}
+                  >
+                    {studi.program}
+                  </option>
+                ))}
+              </select>
+
+              {/* <input
                 id="programstudi"
                 type="text"
                 placeholder="Masukkan Program Studi"
@@ -102,7 +131,7 @@ export default function MahasiswaEditScreen(props) {
                 onChange={(e) => {
                   setProgramstudi(e.target.value);
                 }}
-              ></input>
+              ></input> */}
             </div>
 
             <div>

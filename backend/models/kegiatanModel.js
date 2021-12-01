@@ -13,10 +13,7 @@ const kegiatanSchema = new mongoose.Schema({
   url: { type: String },
   foto: { type: String },
   surattgs: { type: String },
-  npm: { type: Number },
-  nama: { type: String },
-  programstudi: { type: String },
-  angkatan: { type: Number },
+  datamahasiswa: { type: mongoose.Schema.Types.ObjectId, ref: "Mahasiswa" },
 });
 const Kegiatan = mongoose.model("Kegiatan", kegiatanSchema);
 

@@ -9,7 +9,7 @@ import { STUDI_UPDATE_RESET } from "../constants/dataprogramstudiConstants";
 export default function StudiEditScreen(props) {
   const studiId = props.match.params.id;
   const [kode, setKode] = useState("");
-  const [programstudi, setProgramstudi] = useState("");
+  const [program, setProgram] = useState("");
 
   const studiDetails = useSelector((state) => state.studiDetails);
   const { loading, error, studi } = studiDetails;
@@ -31,7 +31,7 @@ export default function StudiEditScreen(props) {
       dispatch(detailsStudi(studiId));
     } else {
       setKode(studi.kode);
-      setProgramstudi(studi.programstudi);
+      setProgram(studi.program);
     }
   }, [dispatch, studi, studiId, successUpdate, props.history]);
 
@@ -42,7 +42,7 @@ export default function StudiEditScreen(props) {
       updateStudi({
         _id: studiId,
         kode,
-        programstudi,
+        program,
       })
     );
   };
@@ -79,9 +79,9 @@ export default function StudiEditScreen(props) {
                 id="text"
                 type="text"
                 placeholder="Masukkan Program Studi"
-                value={programstudi}
+                value={program}
                 onChange={(e) => {
-                  setProgramstudi(e.target.value);
+                  setProgram(e.target.value);
                 }}
               ></input>
             </div>

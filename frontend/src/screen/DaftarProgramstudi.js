@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createStudi,
@@ -15,8 +15,9 @@ import {
 
 export default function DaftarProgramstudi(props) {
   const dispatch = useDispatch();
+  const [searchTerm, setSearchTerm] = useState("");
   const studiList = useSelector((state) => state.studiList);
-  const { loading, error, gunadarma } = studiList;
+  const { loading, error, daftarprogramstudi } = studiList;
   const studiCreate = useSelector((state) => state.studiCreate);
   const {
     loading: loadingCreate,
@@ -69,6 +70,13 @@ export default function DaftarProgramstudi(props) {
           <button className="tombolinput" onClick={createHandler}>
             Input Data
           </button>
+          <input
+            type="text"
+            placeholder="Cari.."
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+            }}
+          />
           <table className="table">
             <thead>
               <tr>
@@ -79,34 +87,45 @@ export default function DaftarProgramstudi(props) {
             </thead>
 
             <tbody>
-              {gunadarma.map((studi) => (
-                <tr key={studi.kode}>
-                  <td>{studi.kode}</td>
-                  <td>{studi.programstudi}</td>
-                  <td>
-                    <div className="buttonaksi">
-                      <button
-                        type="button"
-                        className="material-icons"
-                        onClick={() =>
-                          props.history.push(
-                            `/daftarprogramstudi/${studi._id}/edit`
-                          )
-                        }
-                      >
-                        edit
-                      </button>
-                      <button
-                        type="button"
-                        className="material-icons"
-                        onClick={() => deleteHandler(studi)}
-                      >
-                        delete
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
+              {daftarprogramstudi
+                .filter((val) => {
+                  if (searchTerm == "") {
+                    return val;
+                  } else if (
+                    val.program.toLowerCase().includes(searchTerm) ||
+                    val.kode.toString().includes(searchTerm)
+                  ) {
+                    return val;
+                  }
+                })
+                .map((studi) => (
+                  <tr key={studi.kode}>
+                    <td>{studi.kode}</td>
+                    <td>{studi.program}</td>
+                    <td>
+                      <div className="buttonaksi">
+                        <button
+                          type="button"
+                          className="material-icons"
+                          onClick={() =>
+                            props.history.push(
+                              `/daftarprogramstudi/${studi._id}/edit`
+                            )
+                          }
+                        >
+                          edit
+                        </button>
+                        <button
+                          type="button"
+                          className="material-icons"
+                          onClick={() => deleteHandler(studi)}
+                        >
+                          delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>

@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const studiSchema = new mongoose.Schema({
   kode: { type: Number },
-  programstudi: { type: String },
+  program: { type: Object },
 });
 const Studi = mongoose.model("Studi", studiSchema);
 
